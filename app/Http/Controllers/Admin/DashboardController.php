@@ -10,6 +10,7 @@ use App\Models\Data_toko;
 use App\Models\Transaksi;
 use App\Models\Users;
 use App\Models\User_menu;
+use App\Models\Dataadmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,6 +23,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
         $data['user'] = AUTH::user();
         $data['title'] = 'Dashboard';
         $data['menu'] = User_menu::all();
@@ -40,7 +42,6 @@ class DashboardController extends Controller
             ->pluck('count');
 
         return view('admin.dashboard.dashboard', $data);
-
     }
 
     /**
@@ -66,10 +67,10 @@ class DashboardController extends Controller
             'file' => 'image|mimes:jpg,jpeg,png',
         ]);
         $file = $request->file('file');
-// isi dengan nama folder tempat kemana file diupload
+        // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'images/jurusan';
 
-// upload file
+        // upload file
 
         // $id = AUTH::User()->id;
         // $gambarlama = AUTH::User()->image;
@@ -84,12 +85,10 @@ class DashboardController extends Controller
             $datajurusan->image = $namafile;
 
             $datajurusan->save();
-
         }
         // dd($datajurusan);
 
         return redirect('/user');
-
     }
 
     /**
@@ -116,12 +115,11 @@ class DashboardController extends Controller
         $data['submenu'] = User_sub_menu::all();
         $data['sub_menu'] = '0';
         $data['menu'] = User_menu::all();
-// $data['tahun_ajaran'] = Tahun_ajaran::all();
+        // $data['tahun_ajaran'] = Tahun_ajaran::all();
         $data['data_jurusan'] = Data_jurusan::find($id);
         $data['data_jurusans'] = Data_jurusan::all();
 
         return view('admin.pembelajaran.settings.datamaster.jurusanedit', $data);
-
     }
 
     /**
@@ -138,10 +136,10 @@ class DashboardController extends Controller
             'file' => 'image|mimes:jpg,jpeg,png',
         ]);
         $file = $request->file('file');
-// isi dengan nama folder tempat kemana file diupload
+        // isi dengan nama folder tempat kemana file diupload
         $tujuan_upload = 'images/jurusan';
 
-// upload file
+        // upload file
 
         $gambarlama = Data_jurusan::find($id);
         // $gambarlama = AUTH::User()->image;
@@ -166,10 +164,9 @@ class DashboardController extends Controller
                 'deskripsi' => $request->deskripsi,
             ]);
 
-// dd($datajurusan);
+        // dd($datajurusan);
 
         return redirect('/jurusan');
-
     }
 
     /**
@@ -183,6 +180,5 @@ class DashboardController extends Controller
         Data_jurusan::where('id', $id)->delete();
 
         return redirect()->back();
-
     }
 }
